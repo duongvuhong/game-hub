@@ -1,10 +1,11 @@
-import { Box, Button, SimpleGrid } from '@chakra-ui/react';
+import { Box, SimpleGrid } from '@chakra-ui/react';
 import useGames from '../hooks/useGames';
 import GameCard from './GameCard';
 import GameCardSkeleton from './GameCardSkeleton';
 import GameCardContainer from './GameCardContainer';
 import { GameQuery } from '../App';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
 
 interface Props {
   gameQuery: GameQuery;
@@ -20,6 +21,14 @@ const GameGrid = ({ gameQuery }: Props) => {
     hasNextPage
   } = useGames(gameQuery);
   const skeletons = [1, 2, 3, 4, 5, 6];
+
+  const { ref, inView } = useInView();
+
+  useEffect(() => {
+    if (hasNextPage && inView) {
+      fetchNextPage();
+    }
+  }, [inView]);
 
   if (error) <div className='text-danger'>{error.message}</div>;
 
@@ -42,11 +51,7 @@ const GameGrid = ({ gameQuery }: Props) => {
             </GameCardContainer>
           ))}
       </SimpleGrid>
-      {hasNextPage && (
-        <Button marginY={5} onClick={() => fetchNextPage()}>
-          {isFetchingNextPage ? 'Loading...' : 'Load More'}
-        </Button>
-      )}
+      <div ref={ref} />
     </Box>
   );
 };
