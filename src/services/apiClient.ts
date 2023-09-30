@@ -9,7 +9,8 @@ const axiosInstance = axios.create({
 
 export interface GetResponse<T> {
   count: number;
-  next?: string;
+  next: string | null;
+  previous: string | null;
   results: T[];
 }
 
