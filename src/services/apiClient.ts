@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 
 const axiosInstance = axios.create({
   baseURL: 'https://api.rawg.io/api',
@@ -19,8 +19,9 @@ class APIClient<T> {
     this.endpoint = endpoint;
   }
 
-  get = async () =>
-    (await axiosInstance.get<GetResponse<T>>(this.endpoint)).data.results;
+  get = async (requestConfig?: AxiosRequestConfig) =>
+    (await axiosInstance.get<GetResponse<T>>(this.endpoint, requestConfig)).data
+      .results;
 }
 
 export default APIClient;
