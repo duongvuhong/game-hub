@@ -8,7 +8,7 @@ import platforms from '../data/platforms';
 const usePlatforms = () =>
   useQuery<GetResponse<Platform>, Error>({
     queryKey: CACHE_KEY_PLATFORMS,
-    queryFn: platformService.get,
+    queryFn: platformService.getAll,
     staleTime: ms('24h'),
     initialData: platforms
   });

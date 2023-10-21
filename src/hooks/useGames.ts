@@ -11,7 +11,7 @@ const useGames = () => {
   return useInfiniteQuery<GetResponse<Game>, Error>({
     queryKey: [...CACHE_KEY_GAMES, gameQuery],
     queryFn: ({ pageParam = 1 }) =>
-      gameService.get({
+      gameService.getAll({
         params: {
           genres: gameQuery.genreId,
           parent_platforms: gameQuery.platformId,

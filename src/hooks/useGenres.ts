@@ -8,7 +8,7 @@ import genres from '../data/genres';
 const useGenres = () =>
   useQuery<GetResponse<Genre>, Error>({
     queryKey: CACHE_KEY_GENRES,
-    queryFn: genreService.get,
+    queryFn: genreService.getAll,
     staleTime: ms('24h'),
     initialData: genres
   });

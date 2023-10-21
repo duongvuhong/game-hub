@@ -21,9 +21,12 @@ class APIClient<T> {
     this.endpoint = endpoint;
   }
 
-  get = async (requestConfig?: AxiosRequestConfig) =>
+  getAll = async (requestConfig?: AxiosRequestConfig) =>
     (await axiosInstance.get<GetResponse<T>>(this.endpoint, requestConfig))
       .data;
+
+  get = async (id: number | string) =>
+    (await axiosInstance.get<T>(`${this.endpoint}/${id}`)).data;
 }
 
 export default APIClient;
